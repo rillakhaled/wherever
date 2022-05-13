@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Wherever You Go, There You Are</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet"></head>
+  <body>
+    <h1>Wherever You Go, There You Are</h1>
+    <div class="container">
+      <div class="ls">
+        <h2>Photos we need</h2>
+
+        <label class="form-control">
+          <input class="item" type="checkbox"/>
+          Somewhere you can train for the CrossFit Games
+        </label>
+        <label class="form-control">
+          <input class="item" type="checkbox"/>
+          Somewhere you can get ramen
+        </label>
+        <label class="form-control">
+          <input class="item" type="checkbox" />
+          Somewhere you can get a haircut
+        </label>
+        <label class="form-control">
+          <input class="item" type="checkbox" />
+          Somewhere you can drop off your CV for an AI programmer job
+        </label>
+        <label class="form-control">
+          <input class="item" type="checkbox" />
+          Somewhere you can buy coffee beans from Burundi
+        </label>
+        <!-- <label class="form-control">
+        <input type="checkbox" />
+        Somewhere you can sit on a park bench
+      </label> -->
+      <label class="form-control">
+        <input type="checkbox" />
+        Somewhere you can buy catfood at 10:47pm
+      </label>
+    </div>
+
+    <div class="rs">
+      <div id="app"></div>
+    </div>
+  </div>
+
+  <!-- <div class="ms"> -->
+    <div class="google-maps">
+      <iframe id="gmap" src="https://www.google.com/maps/d/u/0/embed?mid=1gMx37R4T06ZtXV_MfMANnduT2mhIBwa7&ehbc=2E312F" width="640" height="480">
+      </iframe>
+    </div>
+    <div class="footer">
+    <button id="reloadMap" type="button">reload map</button></div>
+  <!-- </div> -->
+
+  <script type="text/javascript" src="script.js"></script>
+</body>
+</html>
