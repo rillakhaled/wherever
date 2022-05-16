@@ -7,6 +7,14 @@ body {
   padding: 0;
 }
 
+canvas {
+  display: block;
+  z-index: 999999;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
 .container {
   display: flex;
@@ -200,4 +208,10 @@ button {
 
 button:hover {
   color: black;
+}
+
+#stopConfetti {
+  margin-top: 1.5em;
+  margin-left: 0;
+  visibility: hidden;
 }

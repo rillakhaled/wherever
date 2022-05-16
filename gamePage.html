@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet"></head>
+  <canvas id="confetti-canvas"></canvas>
   <body>
     <h1>Wherever You Go, There You Are</h1>
 
@@ -34,9 +35,11 @@
           Somewhere you can get yourself an artisanal espresso
         </label>
         <label class="form-control">
-          <input type="checkbox" />
+          <input class="item" type="checkbox" />
           Somewhere you can buy catfood at 10:47pm
         </label>
+
+        <button type="button" id="stopConfetti">THAT'S ENOUGH CONFETTI, THANK YOU.</button>
       </div>
 
       <div class="rs">
@@ -52,8 +55,9 @@
       <button id="reloadMap" type="button">reload map</button>
     </div>
 
+
+    <script src="confetti.js"></script>
     <script type="text/javascript" src="script.js"></script>
-    <!-- <script src="confetti.js"></script> -->
 
   </body>
   </html>

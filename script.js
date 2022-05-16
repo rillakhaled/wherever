@@ -1,10 +1,15 @@
-// Credit: Mateusz Rybczonec
-
+// Timer credit: Mateusz Rybczonec
 const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 10;
 const ALERT_THRESHOLD = 5;
+
+
 const btnReload = document.querySelector("#reloadMap");
+const stopConfettiBtn = document.querySelector("#stopConfetti");
 const items = document.querySelectorAll(".item");
+const itemsNeeded = 6;
+const victoryTune = new Audio("victory.mp3");
+const failureTune = new Audio("fail.mp3");
 
 const COLOR_CODES = {
   info: {
@@ -81,18 +86,6 @@ a 45,45 0 1,0 -90,0
   function startTimer() {
     startingTime = Date.now();
     window.requestAnimationFrame(tick);
-
-    // timerInterval = setInterval(() => {
-    //   timePassed = timePassed += 1;
-    //   timeLeft = TIME_LIMIT - timePassed;
-    //   document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
-    //   setCircleDasharray();
-    //   setRemainingPathColor(timeLeft);
-    //
-    //   if (timeLeft === 0) {
-    //     onTimesUp();
-    //   }
-    // }, 1000);
   }
 
   function formatTime(time) {
@@ -138,13 +131,37 @@ a 45,45 0 1,0 -90,0
     .getElementById("base-timer-path-remaining")
     .setAttribute("stroke-dasharray", circleDasharray);
   }
+  function triggerUnsuccessfulEnd() {
+    failureTune.play();
+  }
+
+  function triggerSuccessfulEnd() {
+    startConfetti();
+    victoryTune.play();
+    stopConfettiBtn.style.visibility = 'visible';
+
+    // NEED TO STOP TIMER
+  }
 
   function recalculateCheckedItems() {
 
+    let itemsCollected = 0;
+    for(item of items) {
+      if(item.checked == true) {
+        itemsCollected++;
+      }
+    }
+    if(itemsCollected >= itemsNeeded) {
+      triggerSuccessfulEnd();
+    }
   }
 
-
   startTimer();
+
+  stopConfettiBtn.addEventListener("click", function(e){
+    e.target.style.visibility = "hidden";
+    stopConfetti();
+  })
 
   btnReload.addEventListener("click", function(e){
     e.preventDefault();
@@ -153,13 +170,9 @@ a 45,45 0 1,0 -90,0
   })
 
 
-    for(item of items) {
+  for(item of items) {
     item.addEventListener("change", function(e){
-      console.log("change");
-      // e.preventDefault();
-      // if(this.checked == true) {
-      //   console.log(this.innerHTML);
-      // }
-      // recalculateCheckedItems();
+      e.preventDefault();
+      recalculateCheckedItems();
     })
   }
