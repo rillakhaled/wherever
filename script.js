@@ -2,7 +2,7 @@
 const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 10;
 const ALERT_THRESHOLD = 5;
-
+let gameOver = false;
 
 const btnReload = document.querySelector("#reloadMap");
 const stopConfettiBtn = document.querySelector("#stopConfetti");
@@ -26,7 +26,7 @@ const COLOR_CODES = {
 };
 
 // 20 minutes * 60 seconds
-const TIME_LIMIT = 20*60;
+const TIME_LIMIT = 20 * 60;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
@@ -54,30 +54,30 @@ a 45,45 0 1,0 -90,0
   timeLeft)}</span>
   </div>`;
 
-  function onTimesUp() {
-    clearInterval(timerInterval);
-  }
 
   let startingTime;
 
   function tick() {
+    if(!gameOver) {
 
-    // dt is elapsed time in milliseconds
-    let dt = Date.now() - startingTime;
+      // dt is elapsed time in milliseconds
+      let dt = Date.now() - startingTime;
 
-    // Update timer display
-    timePassed = Math.floor(dt/1000);
-    timeLeft = TIME_LIMIT - timePassed;
+      // Update timer display
+      timePassed = Math.floor(dt/1000);
+      timeLeft = TIME_LIMIT - timePassed;
 
-    document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
-    setCircleDasharray();
-    setRemainingPathColor(timeLeft);
+      document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+      setCircleDasharray();
+      setRemainingPathColor(timeLeft);
 
-    if (timeLeft === 0) {
-      onTimesUp();
-    }
-    else {
-      window.requestAnimationFrame(tick);
+      if (timeLeft === 0) {
+        gameOver = true;
+        triggerUnsuccessfulEnd();
+      }
+      else {
+        window.requestAnimationFrame(tick);
+      }
     }
   }
 
