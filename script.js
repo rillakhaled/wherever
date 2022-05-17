@@ -25,6 +25,8 @@ const COLOR_CODES = {
   }
 };
 
+let state = undefined;
+
 // 20 minutes * 60 seconds
 const TIME_LIMIT = 20 * 60;
 let timePassed = 0;
@@ -53,7 +55,6 @@ a 45,45 0 1,0 -90,0
 <span id="base-timer-label" class="base-timer__label">${formatTime(
   timeLeft)}</span>
   </div>`;
-
 
   let startingTime;
 
@@ -85,6 +86,15 @@ a 45,45 0 1,0 -90,0
 
   function startTimer() {
     startingTime = Date.now();
+
+    let data = JSON.parse(localStorage.getItem(`wherever-you-are-state`));
+    if (data) {
+      startingTime = data.startingTime;
+      for (let i = 0; i < data.items.length; i++) {
+        items[i].checked = data.items[i];
+      }
+    }
+
     window.requestAnimationFrame(tick);
   }
 
@@ -136,23 +146,28 @@ a 45,45 0 1,0 -90,0
   }
 
   function triggerSuccessfulEnd() {
+    gameOver = true;
     startConfetti();
     victoryTune.play();
     stopConfettiBtn.style.visibility = 'visible';
-
-    // NEED TO STOP TIMER
   }
 
-  function recalculateCheckedItems() {
+  function recalculateCheckedItems(e) {
 
     let itemsCollected = 0;
     for(item of items) {
-      if(item.checked == true) {
+      if(item.checked === true) {
         itemsCollected++;
       }
     }
     if(itemsCollected >= itemsNeeded) {
-      triggerSuccessfulEnd();
+      let confirmation = prompt(`Type "confetti" to confirm all photos collected: `);
+      if(confirmation==='confetti') {
+        triggerSuccessfulEnd();
+      }
+      else {
+        e.target.checked = false;
+      }
     }
   }
 
@@ -169,10 +184,32 @@ a 45,45 0 1,0 -90,0
     frame.src = frame.src;
   })
 
+  window.addEventListener("beforeunload", function(e) {
+    if (gameOver) {
+      localStorage.removeItem(`wherever-you-are-state`);
+    }
+    else {
+      state = {};
+      state.startingTime = startingTime;
+      state.items = [];
+      for(let i = 0; i < items.length; i++) {
+        state.items[i] = items[i].checked;
+      }
+      localStorage.setItem(`wherever-you-are-state`,JSON.stringify(state));
+    }
+  });
 
   for(item of items) {
     item.addEventListener("change", function(e){
       e.preventDefault();
-      recalculateCheckedItems();
+      setTimeout(() => {
+        recalculateCheckedItems(e);
+      },100);
     })
   }
+
+  document.getElementById(`reset-game`).addEventListener(`click`, () => {
+    gameOver = true;
+    window.scrollTo(0,0);
+    location.reload();
+  });
