@@ -35,13 +35,13 @@ p {
 }
 
 a {
-  background-color: black;
+  background-color: #FF0080;
   color: white;
   text-decoration: none;
 }
 
 a:hover {
-  color: #FF0080;
+  color: black;
 }
 
 .container {
